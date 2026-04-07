@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -231,6 +232,7 @@ function GoalCard({ goal }: { goal: Goal }) {
         <DialogContent className="rounded-3xl max-w-[90%] sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Editar Meta</DialogTitle>
+            <DialogDescription>Modifique os detalhes da sua meta abaixo.</DialogDescription>
           </DialogHeader>
           <GoalForm
             initialData={{ title: goal.title, target: goal.target, unit: goal.unit }}
@@ -335,6 +337,7 @@ export function GoalsTab() {
             <DialogContent className="rounded-3xl max-w-[90%] sm:max-w-md">
               <DialogHeader>
                 <DialogTitle>Metas Sugeridas</DialogTitle>
+                <DialogDescription>Escolha uma das metas sugeridas para adicionar.</DialogDescription>
               </DialogHeader>
               <div className="space-y-2">
                 {SUGGESTED_GOALS.map((suggestion, i) => {
@@ -380,6 +383,7 @@ export function GoalsTab() {
             <DialogContent className="rounded-3xl max-w-[90%] sm:max-w-md">
               <DialogHeader>
                 <DialogTitle>Criar Nova Meta</DialogTitle>
+                <DialogDescription>Defina uma nova meta para acompanhar seu progresso.</DialogDescription>
               </DialogHeader>
               <GoalForm
                 onSubmit={(data) => addGoal(data)}

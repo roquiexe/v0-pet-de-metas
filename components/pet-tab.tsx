@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
@@ -282,10 +283,10 @@ export function PetTab() {
         <DialogContent className="rounded-3xl max-w-[90%] sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Trocar Seu Pet</DialogTitle>
+            <DialogDescription>
+              Seu progresso será mantido! Apenas a aparência muda.
+            </DialogDescription>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground mb-4">
-            Seu progresso será mantido! Apenas a aparência muda.
-          </p>
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => handleChangePet('dog')}
@@ -326,10 +327,10 @@ export function PetTab() {
               <Heart className="w-5 h-5 text-pink-400" />
               Dê um Nome ao Seu Pet
             </DialogTitle>
+            <DialogDescription>
+              Escolha um nome carinhoso para seu companheiro!
+            </DialogDescription>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground mb-4">
-            Escolha um nome carinhoso para seu companheiro!
-          </p>
           <div className="space-y-4">
             <Input
               value={tempName}
