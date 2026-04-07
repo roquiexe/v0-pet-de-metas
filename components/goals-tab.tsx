@@ -31,36 +31,36 @@ import {
   GraduationCap,
   Droplets,
   Footprints,
-  X
 } from 'lucide-react'
 
 const UNITS = [
-  'minutes',
-  'hours',
-  'pages',
-  'repetitions',
-  'glasses',
-  'liters',
-  'sessions',
-  'steps',
-  'km',
+  { value: 'minutos', label: 'minutos' },
+  { value: 'horas', label: 'horas' },
+  { value: 'páginas', label: 'páginas' },
+  { value: 'repetições', label: 'repetições' },
+  { value: 'copos', label: 'copos' },
+  { value: 'litros', label: 'litros' },
+  { value: 'sessões', label: 'sessões' },
+  { value: 'sessão', label: 'sessão' },
+  { value: 'passos', label: 'passos' },
+  { value: 'km', label: 'km' },
 ]
 
 const SUGGESTED_GOALS = [
-  { title: 'Go to the gym', target: 1, unit: 'session', icon: Dumbbell },
-  { title: 'Study', target: 30, unit: 'minutes', icon: GraduationCap },
-  { title: 'Read', target: 20, unit: 'pages', icon: BookOpen },
-  { title: 'Drink water', target: 8, unit: 'glasses', icon: Droplets },
-  { title: 'Walk', target: 5000, unit: 'steps', icon: Footprints },
+  { title: 'Ir para a academia', target: 1, unit: 'sessão', icon: Dumbbell },
+  { title: 'Estudar', target: 30, unit: 'minutos', icon: GraduationCap },
+  { title: 'Ler', target: 20, unit: 'páginas', icon: BookOpen },
+  { title: 'Beber água', target: 8, unit: 'copos', icon: Droplets },
+  { title: 'Caminhar', target: 5000, unit: 'passos', icon: Footprints },
 ]
 
 const getGoalIcon = (title: string) => {
   const lowerTitle = title.toLowerCase()
-  if (lowerTitle.includes('gym') || lowerTitle.includes('exercise') || lowerTitle.includes('workout')) return Dumbbell
-  if (lowerTitle.includes('study') || lowerTitle.includes('learn')) return GraduationCap
-  if (lowerTitle.includes('read')) return BookOpen
-  if (lowerTitle.includes('water') || lowerTitle.includes('drink')) return Droplets
-  if (lowerTitle.includes('walk') || lowerTitle.includes('step')) return Footprints
+  if (lowerTitle.includes('academia') || lowerTitle.includes('exercício') || lowerTitle.includes('treino') || lowerTitle.includes('gym')) return Dumbbell
+  if (lowerTitle.includes('estudar') || lowerTitle.includes('aprender') || lowerTitle.includes('study')) return GraduationCap
+  if (lowerTitle.includes('ler') || lowerTitle.includes('read')) return BookOpen
+  if (lowerTitle.includes('água') || lowerTitle.includes('beber') || lowerTitle.includes('water')) return Droplets
+  if (lowerTitle.includes('caminhar') || lowerTitle.includes('andar') || lowerTitle.includes('walk') || lowerTitle.includes('passo')) return Footprints
   return Target
 }
 
@@ -83,7 +83,7 @@ function GoalForm({
 }) {
   const [title, setTitle] = useState(initialData?.title || '')
   const [target, setTarget] = useState(initialData?.target?.toString() || '')
-  const [unit, setUnit] = useState(initialData?.unit || 'minutes')
+  const [unit, setUnit] = useState(initialData?.unit || 'minutos')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -96,11 +96,11 @@ function GoalForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="text-sm font-medium text-foreground mb-2 block">Goal Title</label>
+        <label className="text-sm font-medium text-foreground mb-2 block">Título da Meta</label>
         <Input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="e.g., Read, Meditate, Exercise..."
+          placeholder="ex: Ler, Meditar, Exercitar..."
           className="rounded-xl"
           autoFocus
         />
@@ -108,7 +108,7 @@ function GoalForm({
       
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="text-sm font-medium text-foreground mb-2 block">Target</label>
+          <label className="text-sm font-medium text-foreground mb-2 block">Objetivo</label>
           <Input
             type="number"
             value={target}
@@ -119,14 +119,14 @@ function GoalForm({
           />
         </div>
         <div>
-          <label className="text-sm font-medium text-foreground mb-2 block">Unit</label>
+          <label className="text-sm font-medium text-foreground mb-2 block">Unidade</label>
           <Select value={unit} onValueChange={setUnit}>
             <SelectTrigger className="rounded-xl">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               {UNITS.map((u) => (
-                <SelectItem key={u} value={u}>{u}</SelectItem>
+                <SelectItem key={u.value} value={u.value}>{u.label}</SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -135,7 +135,7 @@ function GoalForm({
       
       <div className="flex gap-2 pt-2">
         <Button type="button" variant="outline" onClick={onClose} className="flex-1 rounded-xl">
-          Cancel
+          Cancelar
         </Button>
         <Button type="submit" className="flex-1 rounded-xl bg-gradient-to-r from-primary to-accent">
           {submitLabel}
@@ -230,13 +230,13 @@ function GoalCard({ goal }: { goal: Goal }) {
       <Dialog open={isEditing} onOpenChange={setIsEditing}>
         <DialogContent className="rounded-3xl max-w-[90%] sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Edit Goal</DialogTitle>
+            <DialogTitle>Editar Meta</DialogTitle>
           </DialogHeader>
           <GoalForm
             initialData={{ title: goal.title, target: goal.target, unit: goal.unit }}
             onSubmit={(data) => updateGoal(goal.id, data)}
             onClose={() => setIsEditing(false)}
-            submitLabel="Save Changes"
+            submitLabel="Salvar"
           />
         </DialogContent>
       </Dialog>
@@ -258,14 +258,14 @@ export function GoalsTab() {
   }
 
   return (
-    <div className="flex flex-col h-full pb-20">
+    <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="px-4 pt-6 pb-4">
+      <div className="px-4 pt-4 pb-4">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Today&apos;s Goals</h1>
+            <h1 className="text-2xl font-bold text-foreground">Metas de Hoje</h1>
             <p className="text-muted-foreground">
-              {completedCount} / {totalCount} completed
+              {completedCount} / {totalCount} concluídas
             </p>
           </div>
           
@@ -291,13 +291,13 @@ export function GoalsTab() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center text-success font-semibold mt-2"
           >
-            Perfect Day! All goals completed!
+            Dia Perfeito! Todas as metas concluídas!
           </motion.p>
         )}
       </div>
       
-      {/* Goals list */}
-      <div className="flex-1 overflow-y-auto px-4">
+      {/* Goals list - with extra bottom padding for fixed buttons */}
+      <div className="flex-1 overflow-y-auto px-4 pb-48">
         <AnimatePresence mode="popLayout">
           {goals.length === 0 ? (
             <motion.div
@@ -306,11 +306,11 @@ export function GoalsTab() {
               className="text-center py-12"
             >
               <Target className="w-16 h-16 mx-auto text-muted-foreground/50 mb-4" />
-              <p className="text-muted-foreground mb-2">No goals yet</p>
-              <p className="text-sm text-muted-foreground">Add some goals to get started!</p>
+              <p className="text-muted-foreground mb-2">Nenhuma meta ainda</p>
+              <p className="text-sm text-muted-foreground">Adicione metas para começar!</p>
             </motion.div>
           ) : (
-            <div className="space-y-3 pb-4">
+            <div className="space-y-3">
               {goals.map((goal) => (
                 <GoalCard key={goal.id} goal={goal} />
               ))}
@@ -319,22 +319,22 @@ export function GoalsTab() {
         </AnimatePresence>
       </div>
       
-      {/* Add goal button */}
-      <div className="fixed bottom-24 left-0 right-0 px-4">
+      {/* Add goal button - fixed at bottom */}
+      <div className="fixed bottom-24 left-0 right-0 px-4 z-30">
         <div className="flex gap-2 max-w-md mx-auto">
           <Dialog open={showSuggestions} onOpenChange={setShowSuggestions}>
             <DialogTrigger asChild>
               <Button 
                 variant="outline" 
-                className="flex-1 py-6 rounded-2xl border-2 border-dashed"
+                className="flex-1 py-6 rounded-2xl border-2 border-dashed bg-background/80 backdrop-blur-sm"
               >
                 <Target className="w-5 h-5 mr-2" />
-                Suggestions
+                Sugestões
               </Button>
             </DialogTrigger>
             <DialogContent className="rounded-3xl max-w-[90%] sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>Suggested Goals</DialogTitle>
+                <DialogTitle>Metas Sugeridas</DialogTitle>
               </DialogHeader>
               <div className="space-y-2">
                 {SUGGESTED_GOALS.map((suggestion, i) => {
@@ -361,7 +361,7 @@ export function GoalsTab() {
                         </p>
                       </div>
                       {exists && (
-                        <span className="text-xs text-muted-foreground">Added</span>
+                        <span className="text-xs text-muted-foreground">Adicionada</span>
                       )}
                     </button>
                   )
@@ -374,17 +374,17 @@ export function GoalsTab() {
             <DialogTrigger asChild>
               <Button className="flex-1 py-6 rounded-2xl bg-gradient-to-r from-primary to-accent shadow-lg">
                 <Plus className="w-5 h-5 mr-2" />
-                Add Goal
+                Adicionar Meta
               </Button>
             </DialogTrigger>
             <DialogContent className="rounded-3xl max-w-[90%] sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>Create New Goal</DialogTitle>
+                <DialogTitle>Criar Nova Meta</DialogTitle>
               </DialogHeader>
               <GoalForm
                 onSubmit={(data) => addGoal(data)}
                 onClose={() => setIsAddingGoal(false)}
-                submitLabel="Create Goal"
+                submitLabel="Criar Meta"
               />
             </DialogContent>
           </Dialog>

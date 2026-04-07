@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import { Pet } from './pet'
 import { Button } from '@/components/ui/button'
 import { PetType, useAppStore } from '@/lib/store'
@@ -35,19 +36,15 @@ export function Onboarding() {
               transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
               className="mb-8"
             >
-              <div className="w-24 h-24 mx-auto bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center shadow-lg">
-                <Flame className="w-12 h-12 text-primary-foreground" />
-              </div>
+              <Image
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo%20do%20Pet%20de%20Metas-RrbP2Gm7Mq6ZhBAILOgS9S2poyNJIv.png"
+                alt="Pet de Metas"
+                width={240}
+                height={120}
+                className="mx-auto"
+                priority
+              />
             </motion.div>
-            
-            <motion.h1
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="text-3xl font-bold text-foreground mb-3"
-            >
-              Pet de Metas
-            </motion.h1>
             
             <motion.p
               initial={{ opacity: 0 }}
@@ -55,7 +52,7 @@ export function Onboarding() {
               transition={{ delay: 0.5 }}
               className="text-muted-foreground mb-8 leading-relaxed"
             >
-              Complete daily goals to evolve your magical flame pet and build unstoppable habits!
+              Complete metas diárias para evoluir seu pet mágico e construir hábitos imparáveis!
             </motion.p>
             
             <motion.div
@@ -66,15 +63,15 @@ export function Onboarding() {
             >
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Sparkles className="w-4 h-4 text-primary" />
-                <span>Set daily healthy goals</span>
+                <span>Defina metas diárias saudáveis</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Flame className="w-4 h-4 text-primary" />
-                <span>Build your flame streak</span>
+                <span>Construa sua sequência de fogo</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Sparkles className="w-4 h-4 text-primary" />
-                <span>Watch your pet evolve</span>
+                <span>Veja seu pet evoluir</span>
               </div>
             </motion.div>
             
@@ -87,7 +84,7 @@ export function Onboarding() {
                 onClick={() => setStep(1)} 
                 className="mt-8 w-full py-6 text-lg font-semibold rounded-2xl shadow-lg bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity"
               >
-                Get Started
+                Começar
               </Button>
             </motion.div>
           </motion.div>
@@ -101,9 +98,9 @@ export function Onboarding() {
             exit={{ opacity: 0, y: -20 }}
             className="text-center w-full max-w-sm"
           >
-            <h2 className="text-2xl font-bold text-foreground mb-2">Choose Your Pet</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-2">Escolha Seu Pet</h2>
             <p className="text-muted-foreground mb-8">
-              Pick a companion for your journey!
+              Escolha um companheiro para sua jornada!
             </p>
             
             <div className="grid grid-cols-2 gap-4 mb-8">
@@ -120,8 +117,8 @@ export function Onboarding() {
                 <div className="flex justify-center mb-3">
                   <Pet type="dog" level={1} size="md" animated={selectedPet === 'dog'} />
                 </div>
-                <p className="font-semibold text-foreground">Doggo</p>
-                <p className="text-xs text-muted-foreground">Loyal friend</p>
+                <p className="font-semibold text-foreground">Cachorrinho</p>
+                <p className="text-xs text-muted-foreground">Amigo leal</p>
               </motion.button>
               
               <motion.button
@@ -137,8 +134,8 @@ export function Onboarding() {
                 <div className="flex justify-center mb-3">
                   <Pet type="cat" level={1} size="md" animated={selectedPet === 'cat'} />
                 </div>
-                <p className="font-semibold text-foreground">Kitty</p>
-                <p className="text-xs text-muted-foreground">Curious soul</p>
+                <p className="font-semibold text-foreground">Gatinho</p>
+                <p className="text-xs text-muted-foreground">Alma curiosa</p>
               </motion.button>
             </div>
             
@@ -147,7 +144,7 @@ export function Onboarding() {
               disabled={!selectedPet}
               className="w-full py-6 text-lg font-semibold rounded-2xl shadow-lg bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity disabled:opacity-50"
             >
-              Begin Adventure
+              Iniciar Aventura
             </Button>
           </motion.div>
         )}

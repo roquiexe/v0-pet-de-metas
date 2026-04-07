@@ -24,6 +24,7 @@ export interface AppState {
   // Onboarding
   hasOnboarded: boolean
   petType: PetType | null
+  petName: string | null
   
   // Pet evolution
   petLevel: number
@@ -39,6 +40,7 @@ export interface AppState {
   // Actions
   setOnboarded: (petType: PetType) => void
   changePet: (petType: PetType) => void
+  setPetName: (name: string) => void
   addGoal: (goal: Omit<Goal, 'id' | 'completed' | 'createdAt'>) => void
   updateGoal: (id: string, updates: Partial<Omit<Goal, 'id' | 'createdAt'>>) => void
   deleteGoal: (id: string) => void
@@ -77,6 +79,7 @@ export const useAppStore = create<AppState>()(
       // Initial state
       hasOnboarded: false,
       petType: null,
+      petName: null,
       petLevel: 1,
       petXP: 0,
       flameStreak: 0,
@@ -88,16 +91,18 @@ export const useAppStore = create<AppState>()(
       setOnboarded: (petType) => set({ 
         hasOnboarded: true, 
         petType,
-        // Add default suggested goals
+        // Add default suggested goals in Portuguese
         goals: [
-          { id: '1', title: 'Go to the gym', target: 1, unit: 'session', completed: false, createdAt: new Date().toISOString() },
-          { id: '2', title: 'Study', target: 30, unit: 'minutes', completed: false, createdAt: new Date().toISOString() },
-          { id: '3', title: 'Read', target: 20, unit: 'pages', completed: false, createdAt: new Date().toISOString() },
-          { id: '4', title: 'Drink water', target: 8, unit: 'glasses', completed: false, createdAt: new Date().toISOString() },
+          { id: '1', title: 'Ir para a academia', target: 1, unit: 'sessão', completed: false, createdAt: new Date().toISOString() },
+          { id: '2', title: 'Estudar', target: 30, unit: 'minutos', completed: false, createdAt: new Date().toISOString() },
+          { id: '3', title: 'Ler', target: 20, unit: 'páginas', completed: false, createdAt: new Date().toISOString() },
+          { id: '4', title: 'Beber água', target: 8, unit: 'copos', completed: false, createdAt: new Date().toISOString() },
         ]
       }),
       
       changePet: (petType) => set({ petType }),
+      
+      setPetName: (name) => set({ petName: name }),
       
       addGoal: (goal) => set((state) => ({
         goals: [...state.goals, {

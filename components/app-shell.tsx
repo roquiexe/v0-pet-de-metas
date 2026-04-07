@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAppStore } from '@/lib/store'
 import { Onboarding } from './onboarding'
+import { Header } from './header'
 import { GoalsTab } from './goals-tab'
 import { PetTab } from './pet-tab'
 import { TrophiesTab } from './trophies-tab'
@@ -34,47 +35,51 @@ export function AppShell() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <AnimatePresence mode="wait">
-        {activeTab === 'goals' && (
-          <motion.div
-            key="goals"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.2 }}
-            className="min-h-screen"
-          >
-            <GoalsTab />
-          </motion.div>
-        )}
-        
-        {activeTab === 'pet' && (
-          <motion.div
-            key="pet"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="min-h-screen"
-          >
-            <PetTab />
-          </motion.div>
-        )}
-        
-        {activeTab === 'trophies' && (
-          <motion.div
-            key="trophies"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.2 }}
-            className="min-h-screen"
-          >
-            <TrophiesTab />
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div className="min-h-screen bg-background flex flex-col">
+      <Header />
+      
+      <div className="flex-1 relative">
+        <AnimatePresence mode="wait">
+          {activeTab === 'goals' && (
+            <motion.div
+              key="goals"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.2 }}
+              className="absolute inset-0"
+            >
+              <GoalsTab />
+            </motion.div>
+          )}
+          
+          {activeTab === 'pet' && (
+            <motion.div
+              key="pet"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="absolute inset-0"
+            >
+              <PetTab />
+            </motion.div>
+          )}
+          
+          {activeTab === 'trophies' && (
+            <motion.div
+              key="trophies"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.2 }}
+              className="absolute inset-0"
+            >
+              <TrophiesTab />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
       
       <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
     </div>

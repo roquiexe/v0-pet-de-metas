@@ -9,8 +9,8 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: 'Pet de Metas - Goal Flame Pet',
-  description: 'Complete daily goals to evolve your magical flame pet',
+  title: 'Pet de Metas - Evolua seu pet completando metas!',
+  description: 'Complete metas diárias para evoluir seu pet mágico e construir hábitos incríveis',
   generator: 'v0.app',
 }
 
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body className={`${nunito.className} antialiased`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

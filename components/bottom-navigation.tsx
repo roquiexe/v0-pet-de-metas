@@ -11,9 +11,9 @@ interface BottomNavigationProps {
 }
 
 const tabs = [
-  { id: 'goals' as const, label: 'Goals', icon: Target },
+  { id: 'goals' as const, label: 'Metas', icon: Target },
   { id: 'pet' as const, label: 'Pet', icon: Flame },
-  { id: 'trophies' as const, label: 'Trophies', icon: Trophy },
+  { id: 'trophies' as const, label: 'Troféus', icon: Trophy },
 ]
 
 export function BottomNavigation({ activeTab, onTabChange }: BottomNavigationProps) {

@@ -15,29 +15,29 @@ interface Achievement {
 
 const ACHIEVEMENTS: Achievement[] = [
   // Perfect Days achievements
-  { id: 'perfect-3', title: 'Getting Started', description: '3 Perfect Days', icon: 'star', requirement: 3, type: 'perfectDays' },
-  { id: 'perfect-10', title: 'Consistent', description: '10 Perfect Days', icon: 'star', requirement: 10, type: 'perfectDays' },
-  { id: 'perfect-25', title: 'Dedicated', description: '25 Perfect Days', icon: 'star', requirement: 25, type: 'perfectDays' },
-  { id: 'perfect-50', title: 'Committed', description: '50 Perfect Days', icon: 'star', requirement: 50, type: 'perfectDays' },
-  { id: 'perfect-100', title: 'Unstoppable', description: '100 Perfect Days', icon: 'star', requirement: 100, type: 'perfectDays' },
+  { id: 'perfect-3', title: 'Começando Bem', description: '3 Dias Perfeitos', icon: 'star', requirement: 3, type: 'perfectDays' },
+  { id: 'perfect-10', title: 'Consistente', description: '10 Dias Perfeitos', icon: 'star', requirement: 10, type: 'perfectDays' },
+  { id: 'perfect-25', title: 'Dedicado', description: '25 Dias Perfeitos', icon: 'star', requirement: 25, type: 'perfectDays' },
+  { id: 'perfect-50', title: 'Comprometido', description: '50 Dias Perfeitos', icon: 'star', requirement: 50, type: 'perfectDays' },
+  { id: 'perfect-100', title: 'Imparável', description: '100 Dias Perfeitos', icon: 'star', requirement: 100, type: 'perfectDays' },
   
   // Level achievements
-  { id: 'level-2', title: 'First Evolution', description: 'Reach Level 2', icon: 'trophy', requirement: 2, type: 'level' },
-  { id: 'level-3', title: 'Rising Star', description: 'Reach Level 3', icon: 'trophy', requirement: 3, type: 'level' },
-  { id: 'level-4', title: 'Blazing Spirit', description: 'Reach Level 4', icon: 'trophy', requirement: 4, type: 'level' },
-  { id: 'level-5', title: 'Inferno Master', description: 'Reach Level 5', icon: 'trophy', requirement: 5, type: 'level' },
-  { id: 'level-6', title: 'Phoenix Rising', description: 'Reach Level 6', icon: 'trophy', requirement: 6, type: 'level' },
-  { id: 'level-7', title: 'Celestial Being', description: 'Reach Level 7', icon: 'trophy', requirement: 7, type: 'level' },
-  { id: 'level-8', title: 'Divine Flame', description: 'Reach Level 8', icon: 'trophy', requirement: 8, type: 'level' },
-  { id: 'level-9', title: 'Eternal Guardian', description: 'Reach Level 9', icon: 'trophy', requirement: 9, type: 'level' },
-  { id: 'level-10', title: 'Legendary Master', description: 'Reach Level 10', icon: 'trophy', requirement: 10, type: 'level' },
+  { id: 'level-2', title: 'Primeira Evolução', description: 'Alcance o Nível 2', icon: 'trophy', requirement: 2, type: 'level' },
+  { id: 'level-3', title: 'Estrela em Ascensão', description: 'Alcance o Nível 3', icon: 'trophy', requirement: 3, type: 'level' },
+  { id: 'level-4', title: 'Espírito Ardente', description: 'Alcance o Nível 4', icon: 'trophy', requirement: 4, type: 'level' },
+  { id: 'level-5', title: 'Mestre do Inferno', description: 'Alcance o Nível 5', icon: 'trophy', requirement: 5, type: 'level' },
+  { id: 'level-6', title: 'Fênix Renascida', description: 'Alcance o Nível 6', icon: 'trophy', requirement: 6, type: 'level' },
+  { id: 'level-7', title: 'Ser Celestial', description: 'Alcance o Nível 7', icon: 'trophy', requirement: 7, type: 'level' },
+  { id: 'level-8', title: 'Chama Divina', description: 'Alcance o Nível 8', icon: 'trophy', requirement: 8, type: 'level' },
+  { id: 'level-9', title: 'Guardião Eterno', description: 'Alcance o Nível 9', icon: 'trophy', requirement: 9, type: 'level' },
+  { id: 'level-10', title: 'Mestre Lendário', description: 'Alcance o Nível 10', icon: 'trophy', requirement: 10, type: 'level' },
   
   // Streak achievements
-  { id: 'streak-7', title: 'One Week Wonder', description: '7 Day Streak', icon: 'flame', requirement: 7, type: 'streak' },
-  { id: 'streak-14', title: 'Fortnight Fighter', description: '14 Day Streak', icon: 'flame', requirement: 14, type: 'streak' },
-  { id: 'streak-30', title: 'Monthly Master', description: '30 Day Streak', icon: 'flame', requirement: 30, type: 'streak' },
-  { id: 'streak-60', title: 'Two Month Titan', description: '60 Day Streak', icon: 'flame', requirement: 60, type: 'streak' },
-  { id: 'streak-100', title: 'Century Champion', description: '100 Day Streak', icon: 'flame', requirement: 100, type: 'streak' },
+  { id: 'streak-7', title: 'Uma Semana Incrível', description: 'Sequência de 7 Dias', icon: 'flame', requirement: 7, type: 'streak' },
+  { id: 'streak-14', title: 'Guerreiro Quinzenal', description: 'Sequência de 14 Dias', icon: 'flame', requirement: 14, type: 'streak' },
+  { id: 'streak-30', title: 'Mestre do Mês', description: 'Sequência de 30 Dias', icon: 'flame', requirement: 30, type: 'streak' },
+  { id: 'streak-60', title: 'Titã de Dois Meses', description: 'Sequência de 60 Dias', icon: 'flame', requirement: 60, type: 'streak' },
+  { id: 'streak-100', title: 'Campeão do Século', description: 'Sequência de 100 Dias', icon: 'flame', requirement: 100, type: 'streak' },
 ]
 
 const getIcon = (icon: Achievement['icon'], unlocked: boolean) => {
@@ -88,7 +88,7 @@ function AchievementCard({ achievement, unlocked, progress }: { achievement: Ach
           {!unlocked && (
             <div className="mt-2">
               <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-                <span>Progress</span>
+                <span>Progresso</span>
                 <span>{progress} / {achievement.requirement}</span>
               </div>
               <div className="h-1.5 bg-muted rounded-full overflow-hidden">
@@ -142,12 +142,12 @@ export function TrophiesTab() {
   return (
     <div className="flex flex-col h-full pb-20 overflow-y-auto">
       {/* Header */}
-      <div className="px-4 pt-6 pb-4">
+      <div className="px-4 pt-4 pb-4">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Trophies</h1>
+            <h1 className="text-2xl font-bold text-foreground">Troféus</h1>
             <p className="text-muted-foreground">
-              {unlockedCount} / {totalCount} unlocked
+              {unlockedCount} / {totalCount} desbloqueados
             </p>
           </div>
           
@@ -174,7 +174,7 @@ export function TrophiesTab() {
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
             <Trophy className="w-5 h-5 text-yellow-500" />
-            <h2 className="font-bold text-foreground">Pet Level</h2>
+            <h2 className="font-bold text-foreground">Nível do Pet</h2>
           </div>
           <div className="grid grid-cols-1 gap-3">
             {levelAchievements.map((achievement, i) => (
@@ -198,7 +198,7 @@ export function TrophiesTab() {
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
             <Star className="w-5 h-5 text-yellow-500" />
-            <h2 className="font-bold text-foreground">Perfect Days</h2>
+            <h2 className="font-bold text-foreground">Dias Perfeitos</h2>
           </div>
           <div className="grid grid-cols-1 gap-3">
             {perfectDaysAchievements.map((achievement, i) => (
@@ -222,7 +222,7 @@ export function TrophiesTab() {
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
             <Flame className="w-5 h-5 text-primary" />
-            <h2 className="font-bold text-foreground">Flame Streak</h2>
+            <h2 className="font-bold text-foreground">Sequência de Fogo</h2>
           </div>
           <div className="grid grid-cols-1 gap-3">
             {streakAchievements.map((achievement, i) => (
