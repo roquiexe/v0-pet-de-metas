@@ -213,19 +213,7 @@ function GoalCard({ goal }: { goal: Goal }) {
           </div>
         </div>
         
-        {goal.completed && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="absolute -right-1 -top-1"
-          >
-            <div className="w-6 h-6 bg-success rounded-full flex items-center justify-center">
-              <svg className="w-4 h-4 text-success-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-          </motion.div>
-        )}
+
       </motion.div>
       
       <Dialog open={isEditing} onOpenChange={setIsEditing}>

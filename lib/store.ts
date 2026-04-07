@@ -36,6 +36,9 @@ export interface AppState {
   perfectDays: number
   lastStreakDate: string | null
   
+  // Track which dates have been counted as perfect days
+  perfectDayDates: string[]
+  
   // Goals
   goals: Goal[]
   dayRecords: DayRecord[]
@@ -92,6 +95,7 @@ export const useAppStore = create<AppState>()(
       flameStreak: 0,
       perfectDays: 0,
       lastStreakDate: null,
+      perfectDayDates: [],
       goals: [],
       dayRecords: [],
       
@@ -128,22 +132,61 @@ export const useAppStore = create<AppState>()(
         return null
       },
       
-      addGoal: (goal) => set((state) => ({
-        goals: [...state.goals, {
-          ...goal,
-          id: Date.now().toString(),
-          completed: false,
-          createdAt: new Date().toISOString()
-        }]
-      })),
+      addGoal: (goal) => set((state) => {
+        const today = getToday()
+        const wasPerfectToday = state.perfectDayDates.includes(today)
+        
+        // Adding a new uncompleted goal breaks perfect day status
+        let newPerfectDays = state.perfectDays
+        let newPerfectDayDates = [...state.perfectDayDates]
+        
+        if (wasPerfectToday) {
+          // Remove today from perfect days since we now have an uncompleted goal
+          newPerfectDays = Math.max(0, state.perfectDays - 1)
+          newPerfectDayDates = newPerfectDayDates.filter(d => d !== today)
+        }
+        
+        return {
+          goals: [...state.goals, {
+            ...goal,
+            id: Date.now().toString(),
+            completed: false,
+            createdAt: new Date().toISOString()
+          }],
+          perfectDays: newPerfectDays,
+          perfectDayDates: newPerfectDayDates
+        }
+      }),
       
       updateGoal: (id, updates) => set((state) => ({
         goals: state.goals.map(g => g.id === id ? { ...g, ...updates } : g)
       })),
       
-      deleteGoal: (id) => set((state) => ({
-        goals: state.goals.filter(g => g.id !== id)
-      })),
+      deleteGoal: (id) => set((state) => {
+        const today = getToday()
+        const updatedGoals = state.goals.filter(g => g.id !== id)
+        
+        // Check if deleting makes the day perfect
+        const completedCount = updatedGoals.filter(g => g.completed).length
+        const totalCount = updatedGoals.length
+        const isPerfectNow = completedCount === totalCount && totalCount > 0
+        const wasPerfectToday = state.perfectDayDates.includes(today)
+        
+        let newPerfectDays = state.perfectDays
+        let newPerfectDayDates = [...state.perfectDayDates]
+        
+        // If deleting a goal makes it perfect and today wasn't already counted
+        if (isPerfectNow && !wasPerfectToday) {
+          newPerfectDays = state.perfectDays + 1
+          newPerfectDayDates.push(today)
+        }
+        
+        return {
+          goals: updatedGoals,
+          perfectDays: newPerfectDays,
+          perfectDayDates: newPerfectDayDates
+        }
+      }),
       
       toggleGoalComplete: (id) => set((state) => {
         const today = getToday()
@@ -157,7 +200,8 @@ export const useAppStore = create<AppState>()(
         
         const completedCount = updatedGoals.filter(g => g.completed).length
         const totalCount = updatedGoals.length
-        const isPerfect = completedCount === totalCount && totalCount > 0
+        const isPerfectNow = completedCount === totalCount && totalCount > 0
+        const wasPerfectToday = state.perfectDayDates.includes(today)
         
         // Check if this is the first completion of the day for streak
         const todayRecord = state.dayRecords.find(r => r.date === today)
@@ -168,6 +212,8 @@ export const useAppStore = create<AppState>()(
         let newStreak = state.flameStreak
         let newLastStreakDate = state.lastStreakDate
         let newXP = state.petXP
+        let newPerfectDays = state.perfectDays
+        let newPerfectDayDates = [...state.perfectDayDates]
         
         if (wasFirstCompletionToday) {
           // Check if streak continues (completed yesterday or is first day)
@@ -186,15 +232,20 @@ export const useAppStore = create<AppState>()(
           newXP = state.petXP + 100
         }
         
-        // Extra XP for perfect day
-        if (isPerfect && !state.dayRecords.find(r => r.date === today)?.isPerfect) {
+        // Handle perfect day logic
+        if (isPerfectNow && !wasPerfectToday) {
+          // Day just became perfect and wasn't counted yet
+          newPerfectDays = state.perfectDays + 1
+          newPerfectDayDates.push(today)
+          // Extra XP for perfect day (only once per day)
           newXP += 200
+        } else if (!isPerfectNow && wasPerfectToday) {
+          // Day was perfect but now it's not (user unchecked a goal)
+          newPerfectDays = Math.max(0, state.perfectDays - 1)
+          newPerfectDayDates = newPerfectDayDates.filter(d => d !== today)
         }
         
         const newLevel = calculateLevel(newXP)
-        const newPerfectDays = isPerfect && !state.dayRecords.find(r => r.date === today && r.isPerfect)
-          ? state.perfectDays + 1
-          : state.perfectDays
         
         // Update or create today's record
         const existingRecordIndex = state.dayRecords.findIndex(r => r.date === today)
@@ -204,7 +255,7 @@ export const useAppStore = create<AppState>()(
           date: today,
           goalsCompleted: completedCount,
           totalGoals: totalCount,
-          isPerfect,
+          isPerfect: isPerfectNow,
           streakIncremented: wasFirstCompletionToday || todayRecord?.streakIncremented || false
         }
         
@@ -221,6 +272,7 @@ export const useAppStore = create<AppState>()(
           petXP: newXP,
           petLevel: newLevel,
           perfectDays: newPerfectDays,
+          perfectDayDates: newPerfectDayDates,
           dayRecords: newDayRecords
         }
       }),
