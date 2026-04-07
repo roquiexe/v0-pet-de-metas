@@ -15,41 +15,20 @@ import {
 } from '@/components/ui/dialog'
 import { Flame, Star, Trophy, Sparkles, ArrowRight, Pencil, Heart } from 'lucide-react'
 
-const LEVEL_NAMES = [
-  'Faísca',
-  'Brasa',
-  'Chama',
-  'Fogueira',
-  'Inferno',
-  'Fênix',
-  'Celestial',
-  'Divino',
-  'Eterno',
-  'Lendário',
-]
-
-const LEVEL_DESCRIPTIONS = [
-  'Sua jornada começa!',
-  'A chama cresce mais forte',
-  'Dançando com propósito',
-  'Brilhando intensamente',
-  'Força imparável',
-  'Renascendo de cada desafio',
-  'Alcançando as estrelas',
-  'Tocado pela grandeza',
-  'Além dos limites mortais',
-  'A conquista suprema',
-]
-
 export function PetTab() {
   const [showChangePet, setShowChangePet] = useState(false)
   const [isEditingName, setIsEditingName] = useState(false)
   const [tempName, setTempName] = useState('')
-  const { petType, petLevel, petXP, flameStreak, perfectDays, petName, changePet, setPetName } = useAppStore()
+  const { petType, petLevel, petXP, flameStreak, perfectDays, dogName, catName, changePet, setPetName } = useAppStore()
   
   const progress = getProgressToNextLevel(petXP, petLevel)
-  const levelName = LEVEL_NAMES[petLevel - 1] || LEVEL_NAMES[9]
-  const levelDescription = LEVEL_DESCRIPTIONS[petLevel - 1] || LEVEL_DESCRIPTIONS[9]
+  
+  // Get current pet name based on selected pet type
+  const currentPetName = petType === 'dog' ? dogName : catName
+  
+  // Get display name for each pet (custom name or default)
+  const getDogDisplayName = () => dogName || 'Cachorrinho'
+  const getCatDisplayName = () => catName || 'Gatinho'
 
   const handleChangePet = (newType: PetType) => {
     changePet(newType)
@@ -57,7 +36,7 @@ export function PetTab() {
   }
 
   const handleEditName = () => {
-    setTempName(petName || '')
+    setTempName(currentPetName || '')
     setIsEditingName(true)
   }
 
@@ -125,49 +104,46 @@ export function PetTab() {
           <Pet type={petType} level={petLevel} size="lg" animated />
         </motion.div>
         
-        {/* Pet Name */}
+        {/* Pet Name - Larger and more prominent */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
           className="mt-6 flex items-center gap-2"
         >
-          {petName ? (
+          {currentPetName ? (
             <button
               onClick={handleEditName}
-              className="group flex items-center gap-2 px-4 py-2 bg-card/50 hover:bg-card rounded-2xl border border-border/50 hover:border-primary/30 transition-all"
+              className="group flex items-center gap-3 px-5 py-3 bg-card/50 hover:bg-card rounded-2xl border border-border/50 hover:border-primary/30 transition-all"
             >
-              <Heart className="w-4 h-4 text-pink-400" />
-              <span className="font-semibold text-foreground">{petName}</span>
-              <Pencil className="w-3 h-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+              <Heart className="w-5 h-5 text-pink-400" />
+              <span className="font-bold text-xl text-foreground">{currentPetName}</span>
+              <Pencil className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
           ) : (
             <button
               onClick={handleEditName}
-              className="flex items-center gap-2 px-4 py-2 bg-card/50 hover:bg-card rounded-2xl border border-dashed border-border/50 hover:border-primary/30 transition-all"
+              className="flex items-center gap-3 px-5 py-3 bg-card/50 hover:bg-card rounded-2xl border border-dashed border-border/50 hover:border-primary/30 transition-all"
             >
-              <Heart className="w-4 h-4 text-muted-foreground" />
-              <span className="text-muted-foreground text-sm">Dê um nome ao seu pet</span>
-              <Pencil className="w-3 h-3 text-muted-foreground" />
+              <Heart className="w-5 h-5 text-muted-foreground" />
+              <span className="text-muted-foreground">Dê um nome ao seu pet</span>
+              <Pencil className="w-4 h-4 text-muted-foreground" />
             </button>
           )}
         </motion.div>
         
-        {/* Level info */}
+        {/* Level info - Just the level badge, no name/description */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="text-center mt-4"
         >
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <div className="px-3 py-1 bg-gradient-to-r from-primary to-accent rounded-full">
+          <div className="flex items-center justify-center gap-2">
+            <div className="px-4 py-2 bg-gradient-to-r from-primary to-accent rounded-full">
               <span className="text-sm font-bold text-primary-foreground">Nível {petLevel}</span>
             </div>
           </div>
-          
-          <h2 className="text-2xl font-bold text-foreground mb-1">{levelName}</h2>
-          <p className="text-muted-foreground">{levelDescription}</p>
         </motion.div>
         
         {/* Progress to next level */}
@@ -278,7 +254,7 @@ export function PetTab() {
         </motion.div>
       </div>
       
-      {/* Change pet dialog */}
+      {/* Change pet dialog - Shows custom names if available */}
       <Dialog open={showChangePet} onOpenChange={setShowChangePet}>
         <DialogContent className="rounded-3xl max-w-[90%] sm:max-w-md">
           <DialogHeader>
@@ -299,7 +275,7 @@ export function PetTab() {
               <div className="flex justify-center mb-3">
                 <Pet type="dog" level={petLevel} size="md" animated={petType === 'dog'} />
               </div>
-              <p className="font-semibold text-foreground">Cachorrinho</p>
+              <p className="font-semibold text-foreground">{getDogDisplayName()}</p>
             </button>
             
             <button
@@ -313,7 +289,7 @@ export function PetTab() {
               <div className="flex justify-center mb-3">
                 <Pet type="cat" level={petLevel} size="md" animated={petType === 'cat'} />
               </div>
-              <p className="font-semibold text-foreground">Gatinho</p>
+              <p className="font-semibold text-foreground">{getCatDisplayName()}</p>
             </button>
           </div>
         </DialogContent>

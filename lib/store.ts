@@ -24,7 +24,10 @@ export interface AppState {
   // Onboarding
   hasOnboarded: boolean
   petType: PetType | null
-  petName: string | null
+  
+  // Separate names for each pet
+  dogName: string | null
+  catName: string | null
   
   // Pet evolution
   petLevel: number
@@ -38,7 +41,7 @@ export interface AppState {
   dayRecords: DayRecord[]
   
   // Actions
-  setOnboarded: (petType: PetType) => void
+  setOnboarded: (petType: PetType, petName?: string) => void
   changePet: (petType: PetType) => void
   setPetName: (name: string) => void
   addGoal: (goal: Omit<Goal, 'id' | 'completed' | 'createdAt'>) => void
@@ -46,6 +49,9 @@ export interface AppState {
   deleteGoal: (id: string) => void
   toggleGoalComplete: (id: string) => void
   resetDailyGoals: () => void
+  
+  // Helpers
+  getCurrentPetName: () => string | null
 }
 
 // XP required for each level (cumulative days of effort)
@@ -79,7 +85,8 @@ export const useAppStore = create<AppState>()(
       // Initial state
       hasOnboarded: false,
       petType: null,
-      petName: null,
+      dogName: null,
+      catName: null,
       petLevel: 1,
       petXP: 0,
       flameStreak: 0,
@@ -88,9 +95,11 @@ export const useAppStore = create<AppState>()(
       goals: [],
       dayRecords: [],
       
-      setOnboarded: (petType) => set({ 
+      setOnboarded: (petType, petName) => set({ 
         hasOnboarded: true, 
         petType,
+        // Set the name for the selected pet type
+        ...(petType === 'dog' ? { dogName: petName || null } : { catName: petName || null }),
         // Add default suggested goals in Portuguese
         goals: [
           { id: '1', title: 'Ir para a academia', target: 1, unit: 'sessão', completed: false, createdAt: new Date().toISOString() },
@@ -102,7 +111,22 @@ export const useAppStore = create<AppState>()(
       
       changePet: (petType) => set({ petType }),
       
-      setPetName: (name) => set({ petName: name }),
+      setPetName: (name) => set((state) => {
+        // Set name for current pet type
+        if (state.petType === 'dog') {
+          return { dogName: name }
+        } else if (state.petType === 'cat') {
+          return { catName: name }
+        }
+        return {}
+      }),
+      
+      getCurrentPetName: () => {
+        const state = get()
+        if (state.petType === 'dog') return state.dogName
+        if (state.petType === 'cat') return state.catName
+        return null
+      },
       
       addGoal: (goal) => set((state) => ({
         goals: [...state.goals, {
