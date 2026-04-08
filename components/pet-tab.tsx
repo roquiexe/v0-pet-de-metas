@@ -52,7 +52,7 @@ export function PetTab() {
   return (
     <div className="flex flex-col h-full pb-20 overflow-y-auto">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-accent/30 via-background to-background -z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-background to-background -z-10" />
       
       {/* Header stats */}
       <div className="px-4 pt-4 pb-4">
@@ -60,7 +60,8 @@ export function PetTab() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 px-4 py-2 bg-card rounded-2xl shadow-sm border border-border"
+            className="flex items-center gap-2 px-4 py-2 bg-card rounded-2xl shadow-sm border border-primary/30"
+            style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.2)' }}
           >
             <Flame className="w-5 h-5 text-primary" />
             <div>
@@ -73,9 +74,10 @@ export function PetTab() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="flex items-center gap-2 px-4 py-2 bg-card rounded-2xl shadow-sm border border-border"
+            className="flex items-center gap-2 px-4 py-2 bg-card rounded-2xl shadow-sm border border-primary/30"
+            style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.2)' }}
           >
-            <Star className="w-5 h-5 text-yellow-500" />
+            <Star className="w-5 h-5 text-primary" />
             <div>
               <p className="text-xs text-muted-foreground">Dias Perfeitos</p>
               <p className="font-bold text-foreground">{perfectDays}</p>
@@ -90,11 +92,11 @@ export function PetTab() {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: 'spring', stiffness: 200 }}
-          className="relative"
+          className="relative z-0"
         >
           {/* Glow effect behind pet */}
           <div 
-            className="absolute inset-0 rounded-full blur-3xl opacity-30"
+            className="absolute inset-0 rounded-full blur-3xl opacity-30 pointer-events-none"
             style={{
               background: `radial-gradient(circle, var(--primary) 0%, transparent 70%)`,
               transform: 'scale(1.5)'
@@ -109,26 +111,28 @@ export function PetTab() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="mt-6 flex items-center gap-2"
+          className="mt-6 flex items-center gap-2 relative z-50"
         >
           {currentPetName ? (
-            <button
+            <Button
+              variant="ghost"
               onClick={handleEditName}
-              className="group flex items-center gap-3 px-5 py-3 bg-card/50 hover:bg-card rounded-2xl border border-border/50 hover:border-primary/30 transition-all"
+              className="group flex items-center gap-3 px-5 py-3 h-auto bg-card/50 hover:bg-card rounded-2xl border border-border/50 hover:border-primary/30 transition-all"
             >
               <Heart className="w-5 h-5 text-pink-400" />
               <span className="font-bold text-xl text-foreground">{currentPetName}</span>
               <Pencil className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-            </button>
+            </Button>
           ) : (
-            <button
+            <Button
+              variant="ghost"
               onClick={handleEditName}
-              className="flex items-center gap-3 px-5 py-3 bg-card/50 hover:bg-card rounded-2xl border border-dashed border-border/50 hover:border-primary/30 transition-all"
+              className="flex items-center gap-3 px-5 py-3 h-auto bg-card/50 hover:bg-card rounded-2xl border border-dashed border-border/50 hover:border-primary/30 transition-all"
             >
               <Heart className="w-5 h-5 text-muted-foreground" />
               <span className="text-muted-foreground">Dê um nome ao seu pet</span>
               <Pencil className="w-4 h-4 text-muted-foreground" />
-            </button>
+            </Button>
           )}
         </motion.div>
         
@@ -137,10 +141,10 @@ export function PetTab() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-center mt-4"
+          className="text-center mt-4 relative z-10"
         >
           <div className="flex items-center justify-center gap-2">
-            <div className="px-4 py-2 bg-gradient-to-r from-primary to-accent rounded-full">
+            <div className="px-4 py-2 bg-gradient-to-r from-primary to-accent rounded-full" style={{ boxShadow: '0 0 15px rgba(168, 85, 247, 0.5)' }}>
               <span className="text-sm font-bold text-primary-foreground">Nível {petLevel}</span>
             </div>
           </div>
@@ -152,13 +156,13 @@ export function PetTab() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="w-full max-w-xs mt-6"
+            className="w-full max-w-xs mt-6 relative z-10"
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-muted-foreground">Progresso para o Nível {petLevel + 1}</span>
               <span className="text-sm font-semibold text-foreground">{Math.round(progress)}%</span>
             </div>
-            <div className="h-4 bg-muted rounded-full overflow-hidden">
+            <div className="h-4 bg-muted rounded-full overflow-hidden border border-primary/20">
               <motion.div
                 className="h-full bg-gradient-to-r from-primary via-accent to-primary rounded-full"
                 initial={{ width: 0 }}
@@ -166,13 +170,13 @@ export function PetTab() {
                 transition={{ type: 'spring', stiffness: 50, delay: 0.5 }}
                 style={{
                   backgroundSize: '200% 100%',
-                  animation: 'shimmer 2s linear infinite',
+                  boxShadow: '0 0 10px rgba(168, 85, 247, 0.5)',
                 }}
               />
             </div>
             <div className="flex items-center justify-center gap-1 mt-2 text-xs text-muted-foreground">
               <Sparkles className="w-3 h-3" />
-              <span>Complete metas para ganhar XP</span>
+              <span>Complete metas para farmar aura</span>
             </div>
           </motion.div>
         )}
@@ -182,7 +186,7 @@ export function PetTab() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
-            className="mt-6 px-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl"
+            className="mt-6 px-6 py-3 bg-gradient-to-r from-primary to-accent rounded-2xl animate-neon-pulse relative z-10"
           >
             <div className="flex items-center gap-2">
               <Trophy className="w-5 h-5 text-white" />
@@ -195,7 +199,7 @@ export function PetTab() {
         <Button
           variant="ghost"
           onClick={() => setShowChangePet(true)}
-          className="mt-6 text-muted-foreground"
+          className="mt-6 text-muted-foreground relative z-50"
         >
           Trocar Pet <ArrowRight className="w-4 h-4 ml-1" />
         </Button>
@@ -208,7 +212,7 @@ export function PetTab() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
-            className="p-4 bg-card rounded-2xl border border-border"
+            className="p-4 bg-card rounded-2xl border border-primary/20"
           >
             <div className="flex items-center gap-2 mb-2">
               <div className="p-2 bg-primary/10 rounded-xl">
@@ -224,11 +228,11 @@ export function PetTab() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 }}
-            className="p-4 bg-card rounded-2xl border border-border"
+            className="p-4 bg-card rounded-2xl border border-primary/20"
           >
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-2 bg-yellow-500/10 rounded-xl">
-                <Star className="w-5 h-5 text-yellow-500" />
+              <div className="p-2 bg-primary/10 rounded-xl">
+                <Star className="w-5 h-5 text-primary" />
               </div>
               <span className="text-sm text-muted-foreground">Dias Perfeitos</span>
             </div>
@@ -241,15 +245,15 @@ export function PetTab() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="mt-3 p-4 bg-card rounded-2xl border border-border"
+          className="mt-3 p-4 bg-card rounded-2xl border border-primary/30 neon-border"
         >
           <div className="flex items-center gap-2 mb-2">
-            <div className="p-2 bg-accent/30 rounded-xl">
-              <Sparkles className="w-5 h-5 text-accent-foreground" />
+            <div className="p-2 bg-primary/20 rounded-xl">
+              <Sparkles className="w-5 h-5 text-primary" />
             </div>
-            <span className="text-sm text-muted-foreground">XP Total Ganho</span>
+            <span className="text-sm text-muted-foreground">Aura Total Farmada</span>
           </div>
-          <p className="text-3xl font-bold text-foreground">{petXP.toLocaleString('pt-BR')}</p>
+          <p className="text-3xl font-bold text-foreground neon-text">{petXP.toLocaleString('pt-BR')}</p>
           <p className="text-xs text-muted-foreground">continue para subir de nível!</p>
         </motion.div>
       </div>
@@ -327,7 +331,7 @@ export function PetTab() {
               <Button 
                 onClick={handleSaveName}
                 disabled={!tempName.trim()}
-                className="flex-1 rounded-xl bg-gradient-to-r from-primary to-accent"
+                className="flex-1 rounded-xl bg-gradient-to-r from-primary to-accent neon-button"
               >
                 Salvar
               </Button>

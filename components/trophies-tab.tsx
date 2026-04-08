@@ -43,9 +43,9 @@ const ACHIEVEMENTS: Achievement[] = [
 const getIcon = (icon: Achievement['icon'], unlocked: boolean) => {
   const className = `w-6 h-6 ${unlocked ? '' : 'text-muted-foreground/50'}`
   switch (icon) {
-    case 'trophy': return <Trophy className={className} style={{ color: unlocked ? '#FFD700' : undefined }} />
-    case 'star': return <Star className={className} style={{ color: unlocked ? '#FFAB00' : undefined }} />
-    case 'flame': return <Flame className={className} style={{ color: unlocked ? '#FF6B35' : undefined }} />
+    case 'trophy': return <Trophy className={className} style={{ color: unlocked ? '#A855F7' : undefined }} />
+    case 'star': return <Star className={className} style={{ color: unlocked ? '#C084FC' : undefined }} />
+    case 'flame': return <Flame className={className} style={{ color: unlocked ? '#E879F9' : undefined }} />
   }
 }
 
@@ -57,9 +57,10 @@ function AchievementCard({ achievement, unlocked, progress }: { achievement: Ach
       whileHover={{ scale: unlocked ? 1.02 : 1 }}
       className={`relative p-4 rounded-2xl border-2 transition-all ${
         unlocked 
-          ? 'bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-yellow-300 dark:border-yellow-700 shadow-lg' 
+          ? 'bg-gradient-to-br from-purple-50 to-fuchsia-50 dark:from-purple-900/20 dark:to-fuchsia-900/20 border-purple-300 dark:border-purple-700 shadow-lg' 
           : 'bg-card border-border opacity-70'
       }`}
+      style={unlocked ? { boxShadow: '0 0 15px rgba(168, 85, 247, 0.3)' } : undefined}
     >
       {/* Lock overlay for locked achievements */}
       {!unlocked && (
@@ -71,7 +72,7 @@ function AchievementCard({ achievement, unlocked, progress }: { achievement: Ach
       <div className="flex items-start gap-3">
         <div className={`p-3 rounded-xl ${
           unlocked 
-            ? 'bg-gradient-to-br from-yellow-200 to-orange-200 dark:from-yellow-800 dark:to-orange-800' 
+            ? 'bg-gradient-to-br from-purple-200 to-fuchsia-200 dark:from-purple-800 dark:to-fuchsia-800' 
             : 'bg-muted'
         }`}>
           {getIcon(achievement.icon, unlocked)}
@@ -107,7 +108,7 @@ function AchievementCard({ achievement, unlocked, progress }: { achievement: Ach
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 300, delay: 0.2 }}
           >
-            <Sparkles className="w-5 h-5 text-yellow-500" />
+            <Sparkles className="w-5 h-5 text-primary" />
           </motion.div>
         )}
       </div>
@@ -151,19 +152,20 @@ export function TrophiesTab() {
             </p>
           </div>
           
-          <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-100 to-orange-100 dark:from-yellow-900/30 dark:to-orange-900/30 rounded-2xl">
-            <Trophy className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
-            <span className="font-bold text-yellow-700 dark:text-yellow-300">{unlockedCount}</span>
+          <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl border border-primary/30" style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.3)' }}>
+            <Trophy className="w-5 h-5 text-primary" />
+            <span className="font-bold text-primary">{unlockedCount}</span>
           </div>
         </div>
         
         {/* Progress bar */}
-        <div className="h-3 bg-muted rounded-full overflow-hidden">
+        <div className="h-3 bg-muted rounded-full overflow-hidden border border-primary/20">
           <motion.div
-            className="h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
+            className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
             initial={{ width: 0 }}
             animate={{ width: `${(unlockedCount / totalCount) * 100}%` }}
             transition={{ type: 'spring', stiffness: 50 }}
+            style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.5)' }}
           />
         </div>
       </div>
@@ -173,7 +175,7 @@ export function TrophiesTab() {
         {/* Level achievements */}
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
-            <Trophy className="w-5 h-5 text-yellow-500" />
+            <Trophy className="w-5 h-5 text-primary" />
             <h2 className="font-bold text-foreground">Nível do Pet</h2>
           </div>
           <div className="grid grid-cols-1 gap-3">
@@ -197,7 +199,7 @@ export function TrophiesTab() {
         {/* Perfect Days achievements */}
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
-            <Star className="w-5 h-5 text-yellow-500" />
+            <Star className="w-5 h-5 text-primary" />
             <h2 className="font-bold text-foreground">Dias Perfeitos</h2>
           </div>
           <div className="grid grid-cols-1 gap-3">

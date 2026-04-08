@@ -4,90 +4,101 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Playful, warm color palette for Pet de Metas */
-  --background: oklch(0.98 0.01 60);
-  --foreground: oklch(0.25 0.02 30);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.25 0.02 30);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.02 30);
-  /* Warm coral/orange primary - fire theme */
-  --primary: oklch(0.7 0.18 40);
-  --primary-foreground: oklch(1 0 0);
-  /* Soft pink secondary */
-  --secondary: oklch(0.92 0.04 350);
-  --secondary-foreground: oklch(0.35 0.08 350);
-  --muted: oklch(0.95 0.01 60);
-  --muted-foreground: oklch(0.5 0.02 30);
-  /* Warm peachy accent */
-  --accent: oklch(0.88 0.1 60);
-  --accent-foreground: oklch(0.35 0.1 40);
+  /* Dark Aura Theme - Purple Neon */
+  --background: oklch(0.12 0.02 280);
+  --foreground: oklch(0.95 0.02 280);
+  --card: oklch(0.16 0.025 280);
+  --card-foreground: oklch(0.95 0.02 280);
+  --popover: oklch(0.16 0.025 280);
+  --popover-foreground: oklch(0.95 0.02 280);
+  /* Neon purple primary */
+  --primary: oklch(0.7 0.25 295);
+  --primary-foreground: oklch(0.98 0 0);
+  /* Deep purple secondary */
+  --secondary: oklch(0.25 0.08 290);
+  --secondary-foreground: oklch(0.9 0.15 295);
+  --muted: oklch(0.2 0.03 280);
+  --muted-foreground: oklch(0.6 0.05 280);
+  /* Purple accent */
+  --accent: oklch(0.55 0.2 300);
+  --accent-foreground: oklch(0.95 0.05 300);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.92 0.02 60);
-  --input: oklch(0.94 0.01 60);
-  --ring: oklch(0.7 0.18 40);
-  /* Chart colors - warm and playful */
-  --chart-1: oklch(0.7 0.18 40);
-  --chart-2: oklch(0.75 0.15 350);
-  --chart-3: oklch(0.8 0.12 80);
-  --chart-4: oklch(0.65 0.2 30);
-  --chart-5: oklch(0.85 0.1 60);
+  --border: oklch(0.28 0.06 290);
+  --input: oklch(0.2 0.04 280);
+  --ring: oklch(0.7 0.25 295);
+  /* Chart colors */
+  --chart-1: oklch(0.7 0.25 295);
+  --chart-2: oklch(0.65 0.2 320);
+  --chart-3: oklch(0.6 0.15 270);
+  --chart-4: oklch(0.75 0.18 285);
+  --chart-5: oklch(0.55 0.22 310);
   --radius: 1rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.7 0.18 40);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: oklch(0.14 0.025 280);
+  --sidebar-foreground: oklch(0.95 0.02 280);
+  --sidebar-primary: oklch(0.7 0.25 295);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.22 0.04 280);
+  --sidebar-accent-foreground: oklch(0.95 0.02 280);
+  --sidebar-border: oklch(0.28 0.06 290);
+  --sidebar-ring: oklch(0.5 0.15 295);
   
-  /* Custom tokens for Pet de Metas */
-  --flame: oklch(0.72 0.2 45);
-  --flame-glow: oklch(0.8 0.15 50);
-  --success: oklch(0.7 0.15 145);
-  --success-foreground: oklch(1 0 0);
+  /* Custom tokens for Aura Pet */
+  --aura: oklch(0.7 0.28 295);
+  --aura-glow: oklch(0.8 0.22 300);
+  --aura-intense: oklch(0.75 0.3 290);
+  --success: oklch(0.65 0.2 160);
+  --success-foreground: oklch(0.98 0 0);
+  
+  /* Neon glow colors */
+  --neon-purple: oklch(0.7 0.3 295);
+  --neon-pink: oklch(0.72 0.25 330);
+  --neon-blue: oklch(0.68 0.2 260);
 }
 
 .dark {
-  --background: oklch(0.18 0.02 30);
-  --foreground: oklch(0.95 0.01 60);
-  --card: oklch(0.22 0.02 30);
-  --card-foreground: oklch(0.95 0.01 60);
-  --popover: oklch(0.22 0.02 30);
-  --popover-foreground: oklch(0.95 0.01 60);
-  --primary: oklch(0.75 0.2 40);
-  --primary-foreground: oklch(0.15 0.02 30);
-  --secondary: oklch(0.3 0.05 350);
-  --secondary-foreground: oklch(0.9 0.04 350);
-  --muted: oklch(0.28 0.02 30);
-  --muted-foreground: oklch(0.65 0.02 60);
-  --accent: oklch(0.35 0.08 60);
-  --accent-foreground: oklch(0.9 0.08 60);
+  --background: oklch(0.12 0.02 280);
+  --foreground: oklch(0.95 0.02 280);
+  --card: oklch(0.16 0.025 280);
+  --card-foreground: oklch(0.95 0.02 280);
+  --popover: oklch(0.16 0.025 280);
+  --popover-foreground: oklch(0.95 0.02 280);
+  --primary: oklch(0.7 0.25 295);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.25 0.08 290);
+  --secondary-foreground: oklch(0.9 0.15 295);
+  --muted: oklch(0.2 0.03 280);
+  --muted-foreground: oklch(0.6 0.05 280);
+  --accent: oklch(0.55 0.2 300);
+  --accent-foreground: oklch(0.95 0.05 300);
   --destructive: oklch(0.5 0.2 27);
   --destructive-foreground: oklch(0.95 0.05 27);
-  --border: oklch(0.3 0.02 30);
-  --input: oklch(0.28 0.02 30);
-  --ring: oklch(0.75 0.2 40);
-  --chart-1: oklch(0.75 0.2 40);
-  --chart-2: oklch(0.7 0.15 350);
-  --chart-3: oklch(0.75 0.12 80);
-  --chart-4: oklch(0.6 0.2 30);
-  --chart-5: oklch(0.8 0.1 60);
-  --sidebar: oklch(0.22 0.02 30);
-  --sidebar-foreground: oklch(0.95 0.01 60);
-  --sidebar-primary: oklch(0.75 0.2 40);
-  --sidebar-primary-foreground: oklch(0.95 0.01 60);
-  --sidebar-accent: oklch(0.3 0.03 30);
-  --sidebar-accent-foreground: oklch(0.95 0.01 60);
-  --sidebar-border: oklch(0.3 0.02 30);
-  --sidebar-ring: oklch(0.5 0.1 40);
+  --border: oklch(0.28 0.06 290);
+  --input: oklch(0.2 0.04 280);
+  --ring: oklch(0.7 0.25 295);
+  --chart-1: oklch(0.7 0.25 295);
+  --chart-2: oklch(0.65 0.2 320);
+  --chart-3: oklch(0.6 0.15 270);
+  --chart-4: oklch(0.75 0.18 285);
+  --chart-5: oklch(0.55 0.22 310);
+  --sidebar: oklch(0.14 0.025 280);
+  --sidebar-foreground: oklch(0.95 0.02 280);
+  --sidebar-primary: oklch(0.7 0.25 295);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.22 0.04 280);
+  --sidebar-accent-foreground: oklch(0.95 0.02 280);
+  --sidebar-border: oklch(0.28 0.06 290);
+  --sidebar-ring: oklch(0.5 0.15 295);
   
-  --flame: oklch(0.75 0.22 45);
-  --flame-glow: oklch(0.85 0.18 50);
-  --success: oklch(0.65 0.15 145);
-  --success-foreground: oklch(0.15 0.02 145);
+  --aura: oklch(0.7 0.28 295);
+  --aura-glow: oklch(0.8 0.22 300);
+  --aura-intense: oklch(0.75 0.3 290);
+  --success: oklch(0.65 0.2 160);
+  --success-foreground: oklch(0.98 0 0);
+  
+  --neon-purple: oklch(0.7 0.3 295);
+  --neon-pink: oklch(0.72 0.25 330);
+  --neon-blue: oklch(0.68 0.2 260);
 }
 
 @theme inline {
@@ -129,10 +140,14 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --color-flame: var(--flame);
-  --color-flame-glow: var(--flame-glow);
+  --color-aura: var(--aura);
+  --color-aura-glow: var(--aura-glow);
+  --color-aura-intense: var(--aura-intense);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
+  --color-neon-purple: var(--neon-purple);
+  --color-neon-pink: var(--neon-pink);
+  --color-neon-blue: var(--neon-blue);
 }
 
 @layer base {
@@ -152,12 +167,53 @@
 
 @keyframes pulse-glow {
   0%, 100% { 
-    filter: drop-shadow(0 0 20px var(--flame-glow));
+    filter: drop-shadow(0 0 20px var(--aura-glow));
     transform: scale(1);
   }
   50% { 
-    filter: drop-shadow(0 0 40px var(--flame-glow));
+    filter: drop-shadow(0 0 40px var(--aura-glow));
     transform: scale(1.02);
+  }
+}
+
+@keyframes aura-breathe {
+  0%, 100% { 
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes aura-flame {
+  0%, 100% { 
+    transform: scaleY(1) translateY(0);
+    opacity: 0.9;
+  }
+  25% { 
+    transform: scaleY(1.1) translateY(-2px);
+    opacity: 1;
+  }
+  50% { 
+    transform: scaleY(0.95) translateY(1px);
+    opacity: 0.85;
+  }
+  75% { 
+    transform: scaleY(1.05) translateY(-1px);
+    opacity: 0.95;
+  }
+}
+
+@keyframes particle-float {
+  0%, 100% { 
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: translateY(-20px) translateX(5px) scale(0.8);
+    opacity: 0.6;
   }
 }
 
@@ -176,6 +232,26 @@
   100% { transform: scale(1) rotate(0deg); }
 }
 
+@keyframes neon-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--aura), 0 0 10px var(--aura), 0 0 20px var(--aura), 0 0 40px var(--aura-glow);
+  }
+  50% {
+    box-shadow: 0 0 10px var(--aura), 0 0 20px var(--aura), 0 0 40px var(--aura), 0 0 80px var(--aura-glow);
+  }
+}
+
+@keyframes energy-wave {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -184,10 +260,49 @@
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
+.animate-aura-breathe {
+  animation: aura-breathe 2.5s ease-in-out infinite;
+}
+
+.animate-aura-flame {
+  animation: aura-flame 1.5s ease-in-out infinite;
+}
+
+.animate-particle-float {
+  animation: particle-float 3s ease-in-out infinite;
+}
+
 .animate-flame-flicker {
   animation: flame-flicker 0.5s ease-in-out infinite;
 }
 
 .animate-celebrate {
   animation: celebrate 0.6s ease-in-out;
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+.animate-energy-wave {
+  animation: energy-wave 2s ease-out infinite;
+}
+
+/* Neon glow effects */
+.neon-border {
+  border: 1px solid var(--aura);
+  box-shadow: 0 0 5px var(--aura), 0 0 10px var(--aura-glow), inset 0 0 5px var(--aura-glow);
+}
+
+.neon-text {
+  text-shadow: 0 0 5px var(--aura), 0 0 10px var(--aura), 0 0 20px var(--aura-glow);
+}
+
+.neon-button {
+  box-shadow: 0 0 10px var(--aura), 0 0 20px var(--aura-glow);
+  transition: box-shadow 0.3s ease;
+}
+
+.neon-button:hover {
+  box-shadow: 0 0 15px var(--aura), 0 0 30px var(--aura-glow), 0 0 45px var(--aura-intense);
 }
