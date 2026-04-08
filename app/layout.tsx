@@ -9,8 +9,8 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: 'Pet de Metas - Evolua seu pet completando metas!',
-  description: 'Complete metas diárias para evoluir seu pet mágico e construir hábitos incríveis',
+  title: 'Aura Pet - Farme aura e evolua seu pet!',
+  description: 'Complete metas diárias para evoluir seu pet, farmar aura e construir hábitos imparáveis!',
   generator: 'v0.app',
 }
 
@@ -19,7 +19,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: '#f97316',
+  themeColor: '#A855F7',
 }
 
 export default function RootLayout({

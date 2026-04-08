@@ -32,7 +32,7 @@ export function Onboarding() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-accent/20 to-secondary/30 flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-b from-background via-primary/10 to-background flex flex-col items-center justify-center p-6">
       <AnimatePresence mode="wait">
         {step === 0 && (
           <motion.div
@@ -49,11 +49,11 @@ export function Onboarding() {
               className="mb-8"
             >
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo%20do%20Pet%20de%20Metas-RrbP2Gm7Mq6ZhBAILOgS9S2poyNJIv.png"
-                alt="Pet de Metas"
-                width={240}
-                height={120}
-                className="mx-auto"
+                src="/images/aura-pet-logo.png"
+                alt="Aura Pet"
+                width={280}
+                height={140}
+                className="mx-auto drop-shadow-[0_0_20px_rgba(168,85,247,0.6)]"
                 priority
               />
             </motion.div>
@@ -64,7 +64,7 @@ export function Onboarding() {
               transition={{ delay: 0.5 }}
               className="text-muted-foreground mb-8 leading-relaxed"
             >
-              Complete metas diárias para evoluir seu pet mágico e construir hábitos imparáveis!
+              Complete metas diárias para evoluir seu pet, farmar aura e construir hábitos imparáveis!
             </motion.p>
             
             <motion.div
@@ -94,7 +94,7 @@ export function Onboarding() {
             >
               <Button 
                 onClick={() => setStep(1)} 
-                className="mt-8 w-full py-6 text-lg font-semibold rounded-2xl shadow-lg bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity"
+                className="mt-8 w-full py-6 text-lg font-semibold rounded-2xl bg-gradient-to-r from-primary to-accent neon-button hover:opacity-90 transition-opacity"
               >
                 Começar
               </Button>
@@ -154,7 +154,7 @@ export function Onboarding() {
             <Button 
               onClick={handleContinueToNaming} 
               disabled={!selectedPet}
-              className="w-full py-6 text-lg font-semibold rounded-2xl shadow-lg bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="w-full py-6 text-lg font-semibold rounded-2xl bg-gradient-to-r from-primary to-accent neon-button hover:opacity-90 transition-opacity disabled:opacity-50"
             >
               Continuar
             </Button>
@@ -199,7 +199,7 @@ export function Onboarding() {
               <div className="flex flex-col gap-3">
                 <Button 
                   onClick={handleStart} 
-                  className="w-full py-6 text-lg font-semibold rounded-2xl shadow-lg bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity"
+                  className="w-full py-6 text-lg font-semibold rounded-2xl bg-gradient-to-r from-primary to-accent neon-button hover:opacity-90 transition-opacity"
                 >
                   {petName.trim() ? 'Iniciar Aventura' : 'Pular e Começar'}
                 </Button>

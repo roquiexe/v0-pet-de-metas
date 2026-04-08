@@ -19,7 +19,7 @@ const tabs = [
 export function BottomNavigation({ activeTab, onTabChange }: BottomNavigationProps) {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50">
-      <div className="bg-card/80 backdrop-blur-xl border-t border-border">
+      <div className="bg-card/90 backdrop-blur-xl border-t border-primary/30" style={{ boxShadow: '0 -4px 20px rgba(168, 85, 247, 0.15)' }}>
         <div className="flex items-center justify-around max-w-md mx-auto px-4 py-2 safe-area-inset-bottom">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id
@@ -34,7 +34,8 @@ export function BottomNavigation({ activeTab, onTabChange }: BottomNavigationPro
                 {isActive && (
                   <motion.div
                     layoutId="activeTab"
-                    className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl"
+                    className="absolute inset-0 bg-gradient-to-r from-primary/30 to-accent/30 rounded-2xl"
+                    style={{ boxShadow: '0 0 15px rgba(168, 85, 247, 0.3), inset 0 0 10px rgba(168, 85, 247, 0.1)' }}
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   />
                 )}

@@ -53,6 +53,7 @@ const SUGGESTED_GOALS = [
   { title: 'Ler', target: 20, unit: 'páginas', icon: BookOpen },
   { title: 'Beber água', target: 8, unit: 'copos', icon: Droplets },
   { title: 'Caminhar', target: 5000, unit: 'passos', icon: Footprints },
+  { title: 'Farmar aura 24 horas', target: 24, unit: 'horas', icon: Target },
 ]
 
 const getGoalIcon = (title: string) => {
@@ -259,16 +260,17 @@ export function GoalsTab() {
             </p>
           </div>
           
-          <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl">
+          <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/30 to-accent/30 rounded-2xl border border-primary/40" style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.3)' }}>
             <Flame className="w-5 h-5 text-primary" />
             <span className="font-bold text-foreground">{flameStreak}</span>
           </div>
         </div>
         
         {/* Progress bar */}
-        <div className="h-3 bg-muted rounded-full overflow-hidden">
+        <div className="h-3 bg-muted rounded-full overflow-hidden border border-primary/20">
           <motion.div
             className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
+            style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.5)' }}
             initial={{ width: 0 }}
             animate={{ width: totalCount > 0 ? `${(completedCount / totalCount) * 100}%` : '0%' }}
             transition={{ type: 'spring', stiffness: 100 }}
@@ -363,7 +365,7 @@ export function GoalsTab() {
           
           <Dialog open={isAddingGoal} onOpenChange={setIsAddingGoal}>
             <DialogTrigger asChild>
-              <Button className="flex-1 py-6 rounded-2xl bg-gradient-to-r from-primary to-accent shadow-lg">
+              <Button className="flex-1 py-6 rounded-2xl bg-gradient-to-r from-primary to-accent neon-button">
                 <Plus className="w-5 h-5 mr-2" />
                 Adicionar Meta
               </Button>
