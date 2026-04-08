@@ -9,19 +9,29 @@ interface PetProps {
   animated?: boolean
 }
 
-// Pet colors evolve with level - Purple/Pink aura theme
+// Pet colors evolve with level - Yellow to Gold to Red to Blue to Purple progression
 const getLevelColors = (level: number) => {
   const colors = [
-    { primary: '#C084FC', secondary: '#E9D5FF', glow: '#A855F7', accent: '#9333EA', aura: '#A855F7' }, // Level 1 - Light purple
-    { primary: '#A855F7', secondary: '#D8B4FE', glow: '#9333EA', accent: '#7C3AED', aura: '#A855F7' }, // Level 2 - Purple
-    { primary: '#9333EA', secondary: '#C4B5FD', glow: '#7C3AED', accent: '#6D28D9', aura: '#9333EA' }, // Level 3 - Violet
-    { primary: '#7C3AED', secondary: '#A78BFA', glow: '#6D28D9', accent: '#5B21B6', aura: '#7C3AED' }, // Level 4 - Deep violet
-    { primary: '#8B5CF6', secondary: '#C4B5FD', glow: '#7C3AED', accent: '#6D28D9', aura: '#8B5CF6' }, // Level 5 - Rich purple
-    { primary: '#A855F7', secondary: '#F0ABFC', glow: '#D946EF', accent: '#C026D3', aura: '#D946EF' }, // Level 6 - Purple pink
-    { primary: '#D946EF', secondary: '#F5D0FE', glow: '#E879F9', accent: '#A855F7', aura: '#E879F9' }, // Level 7 - Fuchsia
-    { primary: '#E879F9', secondary: '#FAE8FF', glow: '#F0ABFC', accent: '#D946EF', aura: '#F0ABFC' }, // Level 8 - Pink glow
-    { primary: '#F0ABFC', secondary: '#FDF4FF', glow: '#F5D0FE', accent: '#E879F9', aura: '#F5D0FE' }, // Level 9 - Light pink
-    { primary: '#E879F9', secondary: '#FAE8FF', glow: '#F0ABFC', accent: '#D946EF', aura: '#F0ABFC', rainbow: true }, // Level 10 - Max aura
+    // Level 1 - Light yellow
+    { primary: '#FEF08A', secondary: '#FEF9C3', glow: '#FACC15', accent: '#EAB308', aura: '#FACC15' },
+    // Level 2 - Stronger yellow / gold
+    { primary: '#FCD34D', secondary: '#FEF08A', glow: '#F59E0B', accent: '#D97706', aura: '#F59E0B' },
+    // Level 3 - Warm tones / dark red
+    { primary: '#FB923C', secondary: '#FDBA74', glow: '#EA580C', accent: '#DC2626', aura: '#DC2626' },
+    // Level 4 - Light blue tint
+    { primary: '#93C5FD', secondary: '#BFDBFE', glow: '#60A5FA', accent: '#3B82F6', aura: '#60A5FA' },
+    // Level 5 - Medium blue
+    { primary: '#60A5FA', secondary: '#93C5FD', glow: '#3B82F6', accent: '#2563EB', aura: '#3B82F6' },
+    // Level 6 - Dark blue
+    { primary: '#3B82F6', secondary: '#60A5FA', glow: '#2563EB', accent: '#1D4ED8', aura: '#2563EB' },
+    // Level 7 - Lilac
+    { primary: '#C4B5FD', secondary: '#DDD6FE', glow: '#A78BFA', accent: '#8B5CF6', aura: '#A78BFA' },
+    // Level 8 - Purple
+    { primary: '#A855F7', secondary: '#C4B5FD', glow: '#9333EA', accent: '#7C3AED', aura: '#9333EA' },
+    // Level 9 - Intense purple with strong glow
+    { primary: '#9333EA', secondary: '#A855F7', glow: '#7C3AED', accent: '#6D28D9', aura: '#7C3AED' },
+    // Level 10 - Premium final version with very intense aura
+    { primary: '#7C3AED', secondary: '#A855F7', glow: '#6D28D9', accent: '#5B21B6', aura: '#8B5CF6', rainbow: true },
   ]
   return colors[Math.min(level - 1, 9)]
 }
@@ -57,11 +67,11 @@ export function Pet({ type, level, size = 'md', animated = true }: PetProps) {
         justifyContent: 'center',
       }}
     >
-      {/* Outer energy waves */}
+      {/* Outer energy waves - pointer-events none to not block clicks */}
       {hasEnergyParticles && (
-        <>
+        <div className="absolute inset-0 pointer-events-none">
           <div 
-            className="absolute rounded-full animate-energy-wave"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full animate-energy-wave"
             style={{
               width: dimensions.width * 0.8,
               height: dimensions.height * 0.8,
@@ -70,7 +80,7 @@ export function Pet({ type, level, size = 'md', animated = true }: PetProps) {
             }}
           />
           <div 
-            className="absolute rounded-full animate-energy-wave"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full animate-energy-wave"
             style={{
               width: dimensions.width * 0.8,
               height: dimensions.height * 0.8,
@@ -79,7 +89,7 @@ export function Pet({ type, level, size = 'md', animated = true }: PetProps) {
             }}
           />
           <div 
-            className="absolute rounded-full animate-energy-wave"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full animate-energy-wave"
             style={{
               width: dimensions.width * 0.8,
               height: dimensions.height * 0.8,
@@ -87,58 +97,43 @@ export function Pet({ type, level, size = 'md', animated = true }: PetProps) {
               animationDelay: '1.4s',
             }}
           />
-        </>
+        </div>
       )}
       
-      {/* Main aura effect - DBZ style flames */}
+      {/* Main aura effect - Clean circular glow - pointer-events none */}
       {hasAura && (
-        <>
-          {/* Base aura glow */}
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+          {/* Base aura glow - circular */}
           <div 
             className="absolute rounded-full animate-aura-breathe"
             style={{
               width: dimensions.width * 1.6,
               height: dimensions.height * 1.6,
-              background: `radial-gradient(ellipse at center, ${colors.aura}50 0%, ${colors.glow}30 40%, transparent 70%)`,
+              background: `radial-gradient(circle at center, ${colors.aura}50 0%, ${colors.glow}30 40%, transparent 70%)`,
               filter: `blur(${8 + level * 2}px)`,
             }}
           />
           
-          {/* Multiple flame layers for intensity */}
+          {/* Multiple circular aura layers for intensity */}
           {Array.from({ length: auraLayers }).map((_, i) => (
             <div 
               key={i}
-              className="absolute animate-aura-flame"
+              className="absolute rounded-full animate-aura-breathe"
               style={{
-                width: dimensions.width * (1.3 + i * 0.15),
-                height: dimensions.height * (1.5 + i * 0.2),
-                background: `radial-gradient(ellipse 50% 60% at 50% 60%, transparent 30%, ${colors.aura}${30 - i * 5} 60%, ${colors.glow}${20 - i * 3} 80%, transparent 100%)`,
-                borderRadius: '50% 50% 40% 40%',
+                width: dimensions.width * (1.2 + i * 0.12),
+                height: dimensions.height * (1.2 + i * 0.12),
+                background: `radial-gradient(circle at center, transparent 30%, ${colors.aura}${30 - i * 5} 60%, ${colors.glow}${20 - i * 3} 80%, transparent 100%)`,
                 animationDelay: `${i * 0.2}s`,
                 filter: `blur(${4 + i * 2}px)`,
               }}
             />
           ))}
-          
-          {/* Top flame burst */}
-          <div 
-            className="absolute animate-aura-flame"
-            style={{
-              width: dimensions.width * 0.8,
-              height: dimensions.height * 1.2,
-              top: `-${dimensions.height * 0.3}px`,
-              background: `linear-gradient(to top, ${colors.aura}60 0%, ${colors.glow}40 50%, transparent 100%)`,
-              borderRadius: '50% 50% 0 0',
-              filter: `blur(${6 + level}px)`,
-              animationDelay: '0.1s',
-            }}
-          />
-        </>
+        </div>
       )}
       
-      {/* Bright sparkles/particles */}
+      {/* Bright sparkles/particles - pointer-events none */}
       {hasSparkles && (
-        <>
+        <div className="absolute inset-0 pointer-events-none">
           <div 
             className="absolute w-3 h-3 rounded-full animate-particle-float"
             style={{ 
@@ -203,7 +198,7 @@ export function Pet({ type, level, size = 'md', animated = true }: PetProps) {
               />
             </>
           )}
-        </>
+        </div>
       )}
       
       {/* The pet SVG */}
@@ -345,27 +340,14 @@ export function Pet({ type, level, size = 'md', animated = true }: PetProps) {
           {/* Crown for high levels */}
           {hasCrown && (
             <g transform="translate(50, 8)">
-              <polygon points="0,-5 -12,5 -8,5 -6,-1 -3,5 0,0 3,5 6,-1 8,5 12,5" fill="#FFD700" stroke="#FFA000" strokeWidth="0.5" />
-              <circle cx="-6" cy="-2" r="2" fill="#E879F9" />
-              <circle cx="0" cy="-4" r="2.5" fill="#A855F7" />
-              <circle cx="6" cy="-2" r="2" fill="#D946EF" />
+              <polygon points="0,-5 -12,5 -8,5 -6,-1 -3,5 0,0 3,5 6,-1 8,5 12,5" fill={colors.aura} stroke={colors.glow} strokeWidth="0.5" />
+              <circle cx="-6" cy="-2" r="2" fill={colors.secondary} />
+              <circle cx="0" cy="-4" r="2.5" fill={colors.primary} />
+              <circle cx="6" cy="-2" r="2" fill={colors.accent} />
             </g>
           )}
         </svg>
       </div>
-      
-      {/* Bottom energy flame */}
-      <div 
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 animate-aura-flame"
-        style={{
-          width: dimensions.width * 0.6,
-          height: dimensions.width * 0.4,
-          background: `linear-gradient(to top, ${colors.aura}80 0%, ${colors.glow}40 60%, transparent 100%)`,
-          borderRadius: '50% 50% 30% 30%',
-          filter: `blur(${4 + level}px)`,
-          zIndex: 5,
-        }}
-      />
     </div>
   )
 }

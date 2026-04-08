@@ -229,8 +229,8 @@ export function PetTab() {
             className="p-4 bg-card rounded-2xl border border-primary/20"
           >
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-2 bg-yellow-500/10 rounded-xl">
-                <Star className="w-5 h-5 text-yellow-500" />
+              <div className="p-2 bg-primary/10 rounded-xl">
+                <Star className="w-5 h-5 text-primary" />
               </div>
               <span className="text-sm text-muted-foreground">Dias Perfeitos</span>
             </div>
