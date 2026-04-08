@@ -58,7 +58,7 @@ export function Pet({ type, level, size = 'md', animated = true }: PetProps) {
   
   return (
     <div 
-      className={`relative ${animated ? 'animate-float' : ''}`}
+      className={`relative pointer-events-none ${animated ? 'animate-float' : ''}`}
       style={{ 
         width: dimensions.width * dimensions.auraScale,
         height: dimensions.height * dimensions.auraScale,
