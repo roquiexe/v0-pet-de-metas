@@ -35,7 +35,7 @@ export function AppShell() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
       <Header />
       
       <div className="flex-1 relative">

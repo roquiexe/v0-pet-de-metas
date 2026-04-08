@@ -15,7 +15,7 @@ interface Achievement {
 
 const ACHIEVEMENTS: Achievement[] = [
   // Perfect Days achievements
-  { id: 'perfect-3', title: 'Começando Bem', description: '3 Dias Perfeitos', icon: 'star', requirement: 3, type: 'perfectDays' },
+  { id: 'perfect-3', title: 'Farmando Aura', description: '3 Dias Perfeitos', icon: 'star', requirement: 3, type: 'perfectDays' },
   { id: 'perfect-10', title: 'Consistente', description: '10 Dias Perfeitos', icon: 'star', requirement: 10, type: 'perfectDays' },
   { id: 'perfect-25', title: 'Dedicado', description: '25 Dias Perfeitos', icon: 'star', requirement: 25, type: 'perfectDays' },
   { id: 'perfect-50', title: 'Comprometido', description: '50 Dias Perfeitos', icon: 'star', requirement: 50, type: 'perfectDays' },
@@ -25,7 +25,7 @@ const ACHIEVEMENTS: Achievement[] = [
   { id: 'level-2', title: 'Primeira Evolução', description: 'Alcance o Nível 2', icon: 'trophy', requirement: 2, type: 'level' },
   { id: 'level-3', title: 'Estrela em Ascensão', description: 'Alcance o Nível 3', icon: 'trophy', requirement: 3, type: 'level' },
   { id: 'level-4', title: 'Espírito Ardente', description: 'Alcance o Nível 4', icon: 'trophy', requirement: 4, type: 'level' },
-  { id: 'level-5', title: 'Mestre do Inferno', description: 'Alcance o Nível 5', icon: 'trophy', requirement: 5, type: 'level' },
+  { id: 'level-5', title: 'Mestre da Aura', description: 'Alcance o Nível 5', icon: 'trophy', requirement: 5, type: 'level' },
   { id: 'level-6', title: 'Fênix Renascida', description: 'Alcance o Nível 6', icon: 'trophy', requirement: 6, type: 'level' },
   { id: 'level-7', title: 'Ser Celestial', description: 'Alcance o Nível 7', icon: 'trophy', requirement: 7, type: 'level' },
   { id: 'level-8', title: 'Chama Divina', description: 'Alcance o Nível 8', icon: 'trophy', requirement: 8, type: 'level' },
@@ -57,7 +57,7 @@ function AchievementCard({ achievement, unlocked, progress }: { achievement: Ach
       whileHover={{ scale: unlocked ? 1.02 : 1 }}
       className={`relative p-4 rounded-2xl border-2 transition-all ${
         unlocked 
-          ? 'bg-gradient-to-br from-purple-50 to-fuchsia-50 dark:from-purple-900/20 dark:to-fuchsia-900/20 border-purple-300 dark:border-purple-700 shadow-lg' 
+          ? 'bg-gradient-to-br from-primary/10 to-accent/10 border-primary/50 shadow-lg' 
           : 'bg-card border-border opacity-70'
       }`}
       style={unlocked ? { boxShadow: '0 0 15px rgba(168, 85, 247, 0.3)' } : undefined}
@@ -72,14 +72,14 @@ function AchievementCard({ achievement, unlocked, progress }: { achievement: Ach
       <div className="flex items-start gap-3">
         <div className={`p-3 rounded-xl ${
           unlocked 
-            ? 'bg-gradient-to-br from-purple-200 to-fuchsia-200 dark:from-purple-800 dark:to-fuchsia-800' 
+            ? 'bg-gradient-to-br from-primary/30 to-accent/30' 
             : 'bg-muted'
         }`}>
           {getIcon(achievement.icon, unlocked)}
         </div>
         
         <div className="flex-1 min-w-0">
-          <h3 className={`font-bold truncate ${unlocked ? 'text-foreground' : 'text-muted-foreground'}`}>
+          <h3 className={`font-bold truncate ${unlocked ? 'text-primary' : 'text-muted-foreground'}`}>
             {achievement.title}
           </h3>
           <p className={`text-sm ${unlocked ? 'text-muted-foreground' : 'text-muted-foreground/70'}`}>
