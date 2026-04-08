@@ -10,7 +10,7 @@ export interface Goal {
   unit: string
   completed: boolean
   createdAt: string
-  rewardedAt: string | null // Tracks the date when XP was awarded for this goal (prevents infinite farming)
+  auraReward: number // How much aura this goal gives when completed (default 100)
 }
 
 export interface DayRecord {
@@ -107,10 +107,10 @@ export const useAppStore = create<AppState>()(
         ...(petType === 'dog' ? { dogName: petName || null } : { catName: petName || null }),
         // Add default suggested goals in Portuguese
         goals: [
-          { id: '1', title: 'Ir para a academia', target: 1, unit: 'sessão', completed: false, createdAt: new Date().toISOString(), rewardedAt: null },
-          { id: '2', title: 'Estudar', target: 30, unit: 'minutos', completed: false, createdAt: new Date().toISOString(), rewardedAt: null },
-          { id: '3', title: 'Ler', target: 20, unit: 'páginas', completed: false, createdAt: new Date().toISOString(), rewardedAt: null },
-          { id: '4', title: 'Beber água', target: 8, unit: 'copos', completed: false, createdAt: new Date().toISOString(), rewardedAt: null },
+          { id: '1', title: 'Ir para a academia', target: 1, unit: 'sessão', completed: false, createdAt: new Date().toISOString(), auraReward: 100 },
+          { id: '2', title: 'Estudar', target: 30, unit: 'minutos', completed: false, createdAt: new Date().toISOString(), auraReward: 100 },
+          { id: '3', title: 'Ler', target: 20, unit: 'páginas', completed: false, createdAt: new Date().toISOString(), auraReward: 100 },
+          { id: '4', title: 'Beber água', target: 8, unit: 'copos', completed: false, createdAt: new Date().toISOString(), auraReward: 100 },
         ]
       }),
       
@@ -153,7 +153,7 @@ export const useAppStore = create<AppState>()(
             id: Date.now().toString(),
             completed: false,
             createdAt: new Date().toISOString(),
-            rewardedAt: null
+            auraReward: 100 // Default reward for each goal
           }],
           perfectDays: newPerfectDays,
           perfectDayDates: newPerfectDayDates
@@ -166,7 +166,15 @@ export const useAppStore = create<AppState>()(
       
       deleteGoal: (id) => set((state) => {
         const today = getToday()
+        const goalToDelete = state.goals.find(g => g.id === id)
         const updatedGoals = state.goals.filter(g => g.id !== id)
+        
+        // If the deleted goal was completed, subtract its aura
+        let newXP = state.petXP
+        if (goalToDelete?.completed) {
+          newXP = Math.max(0, state.petXP - goalToDelete.auraReward)
+        }
+        const newLevel = calculateLevel(newXP)
         
         // Check if deleting makes the day perfect
         const completedCount = updatedGoals.filter(g => g.completed).length
@@ -185,6 +193,8 @@ export const useAppStore = create<AppState>()(
         
         return {
           goals: updatedGoals,
+          petXP: newXP,
+          petLevel: newLevel,
           perfectDays: newPerfectDays,
           perfectDayDates: newPerfectDayDates
         }
@@ -196,41 +206,46 @@ export const useAppStore = create<AppState>()(
         if (!goal) return state
         
         const newCompleted = !goal.completed
+        const auraChange = newCompleted ? goal.auraReward : -goal.auraReward
         
-        // Check if this goal has already been rewarded today
-        const alreadyRewardedToday = goal.rewardedAt === today
-        
-        // Only award XP if completing (not uncompleting) AND not already rewarded today
-        const shouldAwardXP = newCompleted && !alreadyRewardedToday
-        
+        // Update the goal's completed status
         const updatedGoals = state.goals.map(g => 
-          g.id === id ? { 
-            ...g, 
-            completed: newCompleted,
-            // Set rewardedAt to today only when awarding XP for the first time today
-            rewardedAt: shouldAwardXP ? today : g.rewardedAt
-          } : g
+          g.id === id ? { ...g, completed: newCompleted } : g
         )
         
+        // Calculate new XP (ensure it never goes below 0)
+        const newXP = Math.max(0, state.petXP + auraChange)
+        
+        // Calculate level based on current XP (can go up or down)
+        const newLevel = calculateLevel(newXP)
+        
+        // Perfect day and streak logic
         const completedCount = updatedGoals.filter(g => g.completed).length
         const totalCount = updatedGoals.length
         const isPerfectNow = completedCount === totalCount && totalCount > 0
         const wasPerfectToday = state.perfectDayDates.includes(today)
         
-        // Check if this is the first completion of the day for streak
+        let newPerfectDays = state.perfectDays
+        let newPerfectDayDates = [...state.perfectDayDates]
+        
+        // Handle perfect day logic
+        if (isPerfectNow && !wasPerfectToday) {
+          newPerfectDays = state.perfectDays + 1
+          newPerfectDayDates.push(today)
+        } else if (!isPerfectNow && wasPerfectToday) {
+          newPerfectDays = Math.max(0, state.perfectDays - 1)
+          newPerfectDayDates = newPerfectDayDates.filter(d => d !== today)
+        }
+        
+        // Streak logic - only increment once per day on first completion
+        let newStreak = state.flameStreak
+        let newLastStreakDate = state.lastStreakDate
         const todayRecord = state.dayRecords.find(r => r.date === today)
         const wasFirstCompletionToday = !todayRecord?.streakIncremented && 
           newCompleted && 
           state.lastStreakDate !== today
         
-        let newStreak = state.flameStreak
-        let newLastStreakDate = state.lastStreakDate
-        let newXP = state.petXP
-        let newPerfectDays = state.perfectDays
-        let newPerfectDayDates = [...state.perfectDayDates]
-        
         if (wasFirstCompletionToday) {
-          // Check if streak continues (completed yesterday or is first day)
           const yesterday = new Date()
           yesterday.setDate(yesterday.getDate() - 1)
           const yesterdayStr = yesterday.toISOString().split('T')[0]
@@ -238,33 +253,12 @@ export const useAppStore = create<AppState>()(
           if (state.lastStreakDate === yesterdayStr || state.lastStreakDate === null) {
             newStreak = state.flameStreak + 1
           } else {
-            // Streak broken, start fresh
             newStreak = 1
           }
           newLastStreakDate = today
         }
         
-        // Award XP only if this goal hasn't been rewarded today
-        if (shouldAwardXP) {
-          newXP = state.petXP + 100
-        }
-        
-        // Handle perfect day logic
-        if (isPerfectNow && !wasPerfectToday) {
-          // Day just became perfect and wasn't counted yet
-          newPerfectDays = state.perfectDays + 1
-          newPerfectDayDates.push(today)
-          // Extra XP for perfect day (only once per day)
-          newXP += 200
-        } else if (!isPerfectNow && wasPerfectToday) {
-          // Day was perfect but now it's not (user unchecked a goal)
-          newPerfectDays = Math.max(0, state.perfectDays - 1)
-          newPerfectDayDates = newPerfectDayDates.filter(d => d !== today)
-        }
-        
-        const newLevel = calculateLevel(newXP)
-        
-        // Update or create today's record
+        // Update day record
         const existingRecordIndex = state.dayRecords.findIndex(r => r.date === today)
         const newDayRecords = [...state.dayRecords]
         
@@ -284,19 +278,32 @@ export const useAppStore = create<AppState>()(
         
         return {
           goals: updatedGoals,
-          flameStreak: newStreak,
-          lastStreakDate: newLastStreakDate,
           petXP: newXP,
           petLevel: newLevel,
+          flameStreak: newStreak,
+          lastStreakDate: newLastStreakDate,
           perfectDays: newPerfectDays,
           perfectDayDates: newPerfectDayDates,
           dayRecords: newDayRecords
         }
       }),
       
-      resetDailyGoals: () => set((state) => ({
-        goals: state.goals.map(g => ({ ...g, completed: false, rewardedAt: null }))
-      }))
+      resetDailyGoals: () => set((state) => {
+        // When resetting daily goals, recalculate XP based on 0 completed goals
+        // This removes aura from all goals that were completed
+        const completedGoalsAura = state.goals
+          .filter(g => g.completed)
+          .reduce((sum, g) => sum + g.auraReward, 0)
+        
+        const newXP = Math.max(0, state.petXP - completedGoalsAura)
+        const newLevel = calculateLevel(newXP)
+        
+        return {
+          goals: state.goals.map(g => ({ ...g, completed: false })),
+          petXP: newXP,
+          petLevel: newLevel
+        }
+      })
     }),
     {
       name: 'pet-de-metas-storage'
