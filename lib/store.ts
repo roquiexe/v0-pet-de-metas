@@ -10,6 +10,7 @@ export interface Goal {
   unit: string
   completed: boolean
   createdAt: string
+  rewardedAt: string | null // Tracks the date when XP was awarded for this goal (prevents infinite farming)
 }
 
 export interface DayRecord {
@@ -106,10 +107,10 @@ export const useAppStore = create<AppState>()(
         ...(petType === 'dog' ? { dogName: petName || null } : { catName: petName || null }),
         // Add default suggested goals in Portuguese
         goals: [
-          { id: '1', title: 'Ir para a academia', target: 1, unit: 'sessão', completed: false, createdAt: new Date().toISOString() },
-          { id: '2', title: 'Estudar', target: 30, unit: 'minutos', completed: false, createdAt: new Date().toISOString() },
-          { id: '3', title: 'Ler', target: 20, unit: 'páginas', completed: false, createdAt: new Date().toISOString() },
-          { id: '4', title: 'Beber água', target: 8, unit: 'copos', completed: false, createdAt: new Date().toISOString() },
+          { id: '1', title: 'Ir para a academia', target: 1, unit: 'sessão', completed: false, createdAt: new Date().toISOString(), rewardedAt: null },
+          { id: '2', title: 'Estudar', target: 30, unit: 'minutos', completed: false, createdAt: new Date().toISOString(), rewardedAt: null },
+          { id: '3', title: 'Ler', target: 20, unit: 'páginas', completed: false, createdAt: new Date().toISOString(), rewardedAt: null },
+          { id: '4', title: 'Beber água', target: 8, unit: 'copos', completed: false, createdAt: new Date().toISOString(), rewardedAt: null },
         ]
       }),
       
@@ -151,7 +152,8 @@ export const useAppStore = create<AppState>()(
             ...goal,
             id: Date.now().toString(),
             completed: false,
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
+            rewardedAt: null
           }],
           perfectDays: newPerfectDays,
           perfectDayDates: newPerfectDayDates
@@ -194,8 +196,20 @@ export const useAppStore = create<AppState>()(
         if (!goal) return state
         
         const newCompleted = !goal.completed
+        
+        // Check if this goal has already been rewarded today
+        const alreadyRewardedToday = goal.rewardedAt === today
+        
+        // Only award XP if completing (not uncompleting) AND not already rewarded today
+        const shouldAwardXP = newCompleted && !alreadyRewardedToday
+        
         const updatedGoals = state.goals.map(g => 
-          g.id === id ? { ...g, completed: newCompleted } : g
+          g.id === id ? { 
+            ...g, 
+            completed: newCompleted,
+            // Set rewardedAt to today only when awarding XP for the first time today
+            rewardedAt: shouldAwardXP ? today : g.rewardedAt
+          } : g
         )
         
         const completedCount = updatedGoals.filter(g => g.completed).length
@@ -228,7 +242,10 @@ export const useAppStore = create<AppState>()(
             newStreak = 1
           }
           newLastStreakDate = today
-          // Award XP for completing a goal
+        }
+        
+        // Award XP only if this goal hasn't been rewarded today
+        if (shouldAwardXP) {
           newXP = state.petXP + 100
         }
         
@@ -278,7 +295,7 @@ export const useAppStore = create<AppState>()(
       }),
       
       resetDailyGoals: () => set((state) => ({
-        goals: state.goals.map(g => ({ ...g, completed: false }))
+        goals: state.goals.map(g => ({ ...g, completed: false, rewardedAt: null }))
       }))
     }),
     {
